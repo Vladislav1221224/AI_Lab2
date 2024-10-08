@@ -33,12 +33,45 @@ for k in k_values:
 best_k = min(errors, key=errors.get)
 print(f"Найкраще значення K: {best_k} з помилкою {errors[best_k]}")
 
+# 6. Візуалізація: Тренувальні точки, Тестові точки і Прогнози
+
+# Графік 1: Тренувальні точки
+plt.figure(figsize=(10, 6))
+plt.scatter(X_train, y_train, color='green', label='Тренувальні точки', alpha=0.6)
+plt.title('Тренувальні дані')
+plt.xlabel('X (нормалізовані значення)')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+# Графік 2: Тестові точки
+plt.figure(figsize=(10, 6))
+plt.scatter(X_test, y_test, color='blue', label='Тестові точки', alpha=0.6)
+plt.title('Тестові дані')
+plt.xlabel('X (нормалізовані значення)')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+# Графік 3: Прогнози для різних значень K
+plt.figure(figsize=(10, 6))
+colors = ['red', 'purple', 'orange']  # кольори для різних значень K
+for i, k in enumerate(k_values):
+    y_pred = knn_models[k].predict(X_test)
+    plt.scatter(X_test, y_pred, color=colors[i], label=f'Прогнози K={k}', alpha=0.6)
+
+plt.title('Прогнози KNN-регресії для різних K')
+plt.xlabel('X (нормалізовані значення)')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
 # 6. Візуалізація отриманих рішень
 plt.figure(figsize=(10, 6))
 
+plt.scatter(X_test, y_test, color='blue', label='Тестові дані', alpha=0.4)
 for k in k_values:
     y_pred = knn_models[k].predict(X_test)
-    plt.scatter(X_test, y_test, color='blue', label='Тестові дані', alpha=0.4)
     plt.scatter(X_test, y_pred, label=f'Прогнози K={k}', alpha=0.6)
 
 plt.title('Прогнози KNN-регресії з різними значеннями K')
